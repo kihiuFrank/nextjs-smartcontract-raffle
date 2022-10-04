@@ -1,6 +1,7 @@
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import { abi, contractAddresses } from "../constants"
 import { useEffect, useState } from "react"
+import { ethers } from "ethers"
 
 // have a funtion to enter the lottery
 
@@ -10,7 +11,7 @@ export default function RaffleEntrance() {
     const raffleAddress = chainId in contractAddresses ? contractAddresses[chainId][0] : null
 
     const [entranceFee, setEntranceFee] = useState("0")
-    /* const{runContractFuction: enterRaffle} = useWeb3Contract({
+    /* const{runContractFunction: enterRaffle} = useWeb3Contract({
         abi: abi,
         contractAddress: raffleAddress, // specify networkId
         functionName: "enterRaffle",
@@ -18,7 +19,7 @@ export default function RaffleEntrance() {
         msgValue: 
     }) */
 
-    const { runContractFuction: getEntranceFee } = useWeb3Contract({
+    const { runContractFunction: getEntranceFee } = useWeb3Contract({
         abi: abi,
         contractAddress: raffleAddress, // specify networkId
         functionName: "getEntranceFee",
@@ -38,7 +39,8 @@ export default function RaffleEntrance() {
     }, [isWeb3Enabled])
     return (
         <div>
-            Hello from Lottery Entrance! <div>Entrance Fee: {entranceFee} ETH</div>
+            Hello from Lottery Entrance!{" "}
+            <div>Entrance Fee: {ethers.utils.formatUnits(entranceFee, "ether")} ETH</div>
         </div>
     )
 }
