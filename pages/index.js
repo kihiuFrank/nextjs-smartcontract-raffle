@@ -14,7 +14,6 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             {/* <ManualHeader /> */}
-            Decentralised Lottery
             <Header />
             <RaffleEntrance />
         </div>
