@@ -79,7 +79,7 @@ export default function RaffleEntrance() {
             message: "Transaction Complete!",
             title: "Tx Notification",
             position: "topR",
-            icon: "bell",
+            icon: "",
         })
     }
 
@@ -99,7 +99,7 @@ export default function RaffleEntrance() {
                         }}
                         disabled={isLoading || isFetching}
                     >
-                        {isFetching || isLoading ? (
+                        {isLoading || isFetching ? (
                             <div className="animate-spin spinner-border h-8 w-8 border-b-2 rounded-full"></div>
                         ) : (
                             <div>Enter Lottery</div>
