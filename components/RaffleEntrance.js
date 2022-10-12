@@ -67,53 +67,59 @@ export default function RaffleEntrance() {
         }
     }, [isWeb3Enabled])
 
-    const handleSuccess = async function (tx) {
-        await tx.wait(1) // wait for the trasantion to be confirmed.
-        handleNewNotification(tx)
-        updateUI()
-    }
-
-    const handleNewNotification = function () {
+    const handleNewNotification = () => {
         dispatch({
             type: "info",
             message: "Transaction Complete!",
-            title: "Tx Notification",
+            title: "Transaction Notification",
             position: "topR",
-            icon: "",
+            icon: "bell",
         })
+    }
+
+    const handleSuccess = async (tx) => {
+        try {
+            await tx.wait(1)
+            updateUI()
+            handleNewNotification(tx)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
         <div className="p-5">
-            Hello from Lottery Entrance!
+            <h1 className="py-4 px-4 font-bold text-3xl">Lottery</h1>
             {raffleAddress ? (
-                <div className="">
+                <>
                     <button
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-auto"
-                        onClick={async function () {
+                        onClick={async () =>
                             await enterRaffle({
+                                // onComplete:
+                                // onError:
                                 onSuccess: handleSuccess, // NOTE: onSuccess checks to see a tx is successfully sent to metamask.
                                 //It doesn't check if the tx has a block confirmation
-                                onError: (e) => console.log(e),
+                                onError: (error) => console.log(error),
                             })
-                        }}
+                        }
                         disabled={isLoading || isFetching}
                     >
                         {isLoading || isFetching ? (
                             <div className="animate-spin spinner-border h-8 w-8 border-b-2 rounded-full"></div>
                         ) : (
-                            <div>Enter Lottery</div>
+                            "Enter Raffle"
                         )}
                     </button>
                     <div>
                         Entrance Fee:{" "}
                         {ethers.utils.formatUnits(entranceFee, "ether")} ETH
                     </div>
-                    <div>Number of Players: {numPlayers}</div>
-                    <div>Recent Winner: {recentWinner}</div>
-                </div>
+                    <div>The current number of players is: {numPlayers}</div>
+                    <div>The most previous winner was: {recentWinner}</div>
+                </>
             ) : (
-                <div>Lottery Address Not Found!</div>
+                <div>Please connect to a supported chain </div>
             )}
         </div>
     )
