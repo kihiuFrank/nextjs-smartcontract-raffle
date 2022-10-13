@@ -4,6 +4,7 @@ import Header from "../components/Header"
 //import ManualHeader from "../components/ManualHeader"
 import RaffleEntrance from "../components/RaffleEntrance"
 import { useMoralis } from "react-moralis"
+import Footer from "../components/Footer"
 
 const supportedChains = ["31337", "5"]
 
@@ -32,6 +33,7 @@ export default function Home() {
             ) : (
                 <div>Please connect to a Wallet</div>
             )}
+            <Footer />
         </div>
     )
 }
